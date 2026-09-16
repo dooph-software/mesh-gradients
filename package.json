@@ -1,0 +1,63 @@
+{
+  "name": "@dooph-software/mesh-gradients",
+  "version": "1.0.0",
+  "description": "Deterministic, seeded mesh-gradient images with a curated set of color palettes.",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dooph-software/mesh-gradients.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "bin": {
+    "mesh-gradient": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./palettes": {
+      "types": "./dist/palettes.d.ts",
+      "import": "./dist/palettes.js",
+      "require": "./dist/palettes.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "lint": "tsc --noEmit",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "examples": "npm run build && node scripts/generate-examples.mjs",
+    "prep-release:patch": "npm version patch && npm run build && git push --follow-tags",
+    "prep-release:minor": "npm version minor && npm run build && git push --follow-tags",
+    "prep-release:major": "npm version major && npm run build && git push --follow-tags",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.5",
+    "sharp": "^0.35.3",
+    "simplex-noise": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "tsup": "^8.5.1",
+    "typescript": "~5.9.3"
+  }
+}
