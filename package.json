@@ -1,6 +1,6 @@
 {
   "name": "@dooph-software/mesh-gradients",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Deterministic, seeded mesh-gradient images with a curated set of color palettes.",
   "type": "module",
   "license": "MIT",
