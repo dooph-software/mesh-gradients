@@ -1,3 +1,37 @@
+/*
+ * render — the noise pipeline that turns a seed and a palette into pixels.
+ *
+ * ## behavior
+ * - `renderCanvas` seeds one stream from the seed, builds three simplex noise
+ *   fields from it, domain-warps the third by the first two, and maps the result
+ *   along the palette ramp; the film grain then draws from the same stream.
+ * - `generateImage` wraps that and encodes: PNG straight off the canvas, WebP
+ *   through sharp at `DEFAULT_WEBP_QUALITY`.
+ * - `lookDescriptions` is the one copy of the per-knob prose; `src/flags.ts`
+ *   builds CLI help from it and `scripts/sync-docs.mjs` builds the README table.
+ *
+ * ## constraints
+ * - The order values are drawn from `random` is fixed: three `createNoise2D`
+ *   calls, then one grain value per pixel. Inserting a draw, removing one, or
+ *   reordering them shifts every pixel of every image — the grain loop is not
+ *   incidental noise that can be swapped for `Math.random`; it consumes the
+ *   tail of the same stream. `test/mesh-gradients.test.mjs` compares seed `aspect` /
+ *   `jewel-peacock` byte-for-byte against artwork already shipped in Aspect.
+ * - `defaultLook` and the bare constants in the pixel loop — the `5.2` / `1.3`
+ *   warp offsets, `amplitude` starting at 0.5 and halving, `frequency`
+ *   doubling, the `smoothStep` around the contrast term — are the prototype's
+ *   values, not tuning suggestions. Any of them changes every image rendered
+ *   without an explicit `look`, which is almost all of them.
+ * - Noise is sampled in normalized coordinates (`pixelX / width`), with the
+ *   aspect ratio applied to X only. This is what makes a 700×800 render the same
+ *   composition as the 1200×1500 default, which `scripts/generate-examples.mjs`
+ *   relies on to ship small previews of the real output. Sampling in absolute
+ *   pixels would make every size a different picture.
+ * - `DEFAULT_WEBP_QUALITY` and the plain `sharp(...).webp({ quality })` call are
+ *   part of the shipped bytes. Adding encoder options (effort, lossless,
+ *   chroma subsampling) changes the fixture comparison even though nothing about
+ *   the rendered pixels moved.
+ */
 import { createCanvas, ImageData, type Canvas, type SKRSContext2D } from '@napi-rs/canvas';
 import sharp from 'sharp';
 import { createNoise2D } from 'simplex-noise';
@@ -19,6 +53,15 @@ export type GradientLook = {
   colorTransitionContrast: number;
   /** Opacity of the film-grain overlay, 0–1. */
   grainOpacity: number;
+};
+
+/** One-line description per knob. Shared by the CLI help and the generated README table. */
+export const lookDescriptions: Readonly<Record<keyof GradientLook, string>> = {
+  baseNoiseFrequency: 'Lower values give broader, softer color regions.',
+  domainWarpStrength: 'How much the color field swirls.',
+  fractalOctaveCount: 'More octaves add finer detail.',
+  colorTransitionContrast: 'Sharpness of the edges between colors.',
+  grainOpacity: 'Strength of the film-grain overlay.',
 };
 
 export const defaultLook: Readonly<GradientLook> = {

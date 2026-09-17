@@ -1,0 +1,22 @@
+[
+  {
+    "seed": "kanye",
+    "palette": "purple-rain",
+    "caption": "dreamscape"
+  },
+  {
+    "seed": "the-weeknd",
+    "palette": "onyx-gold",
+    "caption": "gravity"
+  },
+  {
+    "seed": "aspect",
+    "palette": "cobalt-ice",
+    "caption": "cirrus"
+  },
+  {
+    "seed": "burgundy-velvet",
+    "palette": "burgundy-velvet",
+    "caption": "silk"
+  }
+]

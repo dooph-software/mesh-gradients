@@ -25,6 +25,7 @@ export {
   DEFAULT_WEBP_QUALITY,
   DEFAULT_WIDTH,
   defaultLook,
+  lookDescriptions,
   type GradientLook,
   type MeshGradientCanvas,
   type MeshGradientFormatOptions,

@@ -1,8 +1,44 @@
+/*
+ * palettes — the curated palette set, its runtime validation, and seed → palette
+ * selection.
+ *
+ * Design intent for new entries: analogous families anchored by neutrals, muted
+ * and earthy options included. Ramps run light → dark, the order the renderer
+ * maps noise values along; the "dark-focused" group starts mid-tone on purpose
+ * so those images read dark with the light stop as a glow.
+ *
+ * ## behavior
+ * - `colorPalettes` is the built-in set. `PaletteName` is derived from it, so
+ *   the literal names are part of the package's public types.
+ * - `pickPalette` uses rendezvous (highest-random-weight) hashing: each palette
+ *   scores `seed::palette::<name>` through the RNG and the highest wins, with
+ *   the name as the tiebreak.
+ * - `validatePalette` / `validatePalettes` are the runtime gate for palettes
+ *   that bypassed the type system (JSON, CLI input, casts).
+ *
+ * ## constraints
+ * - A palette's name is its identity, not a label. It is the rendezvous hash
+ *   key, so renaming one re-picks every seed that had landed on it; it is also
+ *   the filename in `examples/` and the key in `examples/featured.json`.
+ *   Renaming a palette is a breaking change to callers' existing artwork, not a
+ *   copy edit.
+ * - Selection stays rendezvous-hashed. An index- or modulo-based pick over the
+ *   array is smaller code and re-picks nearly every seed the moment a palette is
+ *   added or removed; `test/mesh-gradients.test.mjs` asserts that adding one
+ *   moves only the seeds that land on the new palette. The `::palette::`
+ *   separator and the run through `createSeededRandom` are part of the key —
+ *   hashing `seed + name` directly mixes shared prefixes poorly and is a
+ *   different assignment for every seed.
+ * - `colorPalettes` keeps `as const satisfies readonly Palette[]`. Dropping the
+ *   `as const` widens `PaletteName` to `string`, which silently removes name
+ *   checking for every consumer; the `@ts-expect-error` lines in
+ *   `test/types.check.ts` then stop erroring and `npm run lint` fails.
+ * - Every ramp is 3–5 stops and the runtime check enforces it. The width of
+ *   `PaletteColors` and `MIN_PALETTE_COLORS`/`MAX_PALETTE_COLORS` must move
+ *   together — a 6-stop tuple added to the type alone would pass typecheck and
+ *   then throw at render time for the caller.
+ */
 import { createSeededRandom, hashStringToInt } from './random';
-
-// Curated palettes for gradient generation, tuned for visual quality.
-// Design intent: analogous families anchored by neutrals, muted/earthy options included.
-// Each ramp runs light → dark; the renderer maps noise values along it.
 
 export const MIN_PALETTE_COLORS = 3;
 export const MAX_PALETTE_COLORS = 5;
@@ -31,6 +67,10 @@ export const colorPalettes = [
   { name: 'honey-espresso', colors: ['#f7ecd9', '#e5b877', '#b9793f', '#5f3418'] },
   { name: 'apricot-plum', colors: ['#fdf0e6', '#f6c79a', '#e58b6f', '#7d4a6b'] },
   { name: 'golden-hour', colors: ['#fdf3e1', '#f7cf8a', '#e89a5a', '#9a4a3a'] },
+  { name: 'vermilion-blush', colors: ['#fbe8e2', '#f7c6a8', '#e4562f', '#a82a1c'] },
+  { name: 'ivory-gilt', colors: ['#fffdf7', '#f7ecd0', '#e0c47e', '#b08c3a'] },
+  { name: 'rose-gold', colors: ['#fceee8', '#f2cdbd', '#dba18c', '#b3705c'] },
+  { name: 'peony-glow', colors: ['#fdeef3', '#f9b3c8', '#f78a5c', '#f2a93f'] },
 
   // ── Pink / violet / mauve ──
   { name: 'lavender-rose', colors: ['#f4eefb', '#d9c2ef', '#c98fb8', '#8a5fd0'] },
@@ -41,6 +81,7 @@ export const colorPalettes = [
   { name: 'quartz-rose', colors: ['#faf1f1', '#ecc9cc', '#c99aa3', '#8a5f6a'] },
   { name: 'wisteria-sky', colors: ['#f2f0fb', '#cfc6ef', '#9fb2e6', '#4f6aa6'] },
   { name: 'zephyr-dawn', colors: ['#fdf3f5', '#f2d6e2', '#c6d6f2', '#7f9fd8'] },
+  { name: 'candy-sky', colors: ['#f6e8ff', '#f7a3e8', '#9aa8f5', '#3fa0f5'] },
 
   // ── Cool: blue / slate / sky (analogous) ──
   { name: 'sky-slate', colors: ['#eef4fb', '#bcd2ef', '#6f8fc4', '#2f3f66'] },
@@ -48,6 +89,7 @@ export const colorPalettes = [
   { name: 'arctic-ink', colors: ['#f2f6f8', '#cddbe2', '#7f96a3', '#1c2630'] },
   { name: 'cloud-navy', colors: ['#f0f3f7', '#c6d1de', '#7488a3', '#1f2c44'] },
   { name: 'denim-clay', colors: ['#eef2f6', '#aebfd0', '#5f7794', '#b06a4e'] },
+  { name: 'cobalt-ice', colors: ['#e8eeff', '#b9cdfb', '#2f4fd8', '#1836b8'] },
 
   // ── Green: sage / moss / mint / olive (analogous) ──
   { name: 'sage-mist', colors: ['#f2f5ee', '#cdd8bd', '#8fa579', '#4a5c3a'] },
@@ -56,6 +98,8 @@ export const colorPalettes = [
   { name: 'eucalyptus-fog', colors: ['#eff4f1', '#cbdcd2', '#94b3a6', '#4f6b60'] },
   { name: 'kelp-forest', colors: ['#eef3ea', '#a9c49a', '#4f7a5a', '#1f3a2f'] },
   { name: 'yuzu-mint', colors: ['#fbfbe6', '#eef29a', '#b3d98a', '#3f8f7a'] },
+  { name: 'lime-lagoon', colors: ['#f8ffe8', '#c8f56a', '#6fe3d8', '#2fc6d8'] },
+  { name: 'bliss-meadow', colors: ['#f4fbff', '#8ed0f2', '#6cb03a', '#2d6b22'] },
 
   // ── Analogous + a single contrasting splash ──
   { name: 'periwinkle-gold', colors: ['#dfe6ff', '#a9b6f0', '#5b6bd6', '#e6c25a'] },
@@ -63,6 +107,8 @@ export const colorPalettes = [
   { name: 'blush-teal', colors: ['#fbeee9', '#f2c2b0', '#d78a8f', '#3f9c94'] },
   { name: 'sage-coral', colors: ['#f2f5ee', '#cdd8bd', '#8fa579', '#e0755a'] },
   { name: 'slate-amber', colors: ['#eef2f6', '#bcc9d8', '#5f7794', '#e0a24e'] },
+  { name: 'ultramarine-sand', colors: ['#dfe8ff', '#e6c27a', '#4757dd', '#232a9c'] },
+  { name: 'amber-tide', colors: ['#eef4f8', '#a9c8ef', '#f2b96b', '#df8a33'] },
 
   // ── Colorful / multi-hue (rich & saturated, jewel tones) ──
   { name: 'sunset-rose', colors: ['#fce9d6', '#f6a95c', '#e8617a', '#8a3d7a'] },
@@ -74,17 +120,34 @@ export const colorPalettes = [
   { name: 'purple-rain', colors: ['#f1ebf7', '#b69ad6', '#6f3fa8', '#2a1740'] },
   { name: 'nectarine-fizz', colors: ['#fff1e6', '#ffc59a', '#ff8a5c', '#d9485f'] },
   { name: 'raspberry-cream', colors: ['#fdeef1', '#f4a9bd', '#d9537a', '#8a1f45'] },
+  { name: 'pastel-confetti', colors: ['#ffffff', '#f9f3cf', '#cbbcf2', '#e8798f'] },
+  { name: 'burgundy-velvet', colors: ['#f2dfe0', '#c98a91', '#8a2740', '#4a0f22'] },
+  { name: 'indigo-beam', colors: ['#ffffff', '#a9b6f7', '#4a3fe0', '#2a1fb0'] },
+  { name: 'crimson-ice', colors: ['#f2f7fc', '#f8d7e0', '#e0517f', '#a81050'] },
 
   // ── Muted / dusty / earthy ──
   { name: 'fog-plum', colors: ['#f2f0f3', '#cfc6d2', '#9a8a9c', '#5f4a5c'] },
   { name: 'sand-sky', colors: ['#f4efe4', '#e0d3b8', '#a9bcc4', '#5f7f8c'] },
   { name: 'xanadu-sage', colors: ['#f1f4f1', '#c8d3c8', '#738678', '#36443a'] },
+  { name: 'walnut-grain', colors: ['#e8d5b7', '#c49a6c', '#8a5a34', '#4a2c17'] },
+
+  // ── Dark-focused: ramps that start mid-tone instead of near-white, so the
+  // image reads dark overall with the lighter stop as a glow ──
+  { name: 'onyx-gold', colors: ['#e8c877', '#b8862f', '#3a2f14', '#0b0b0d'] },
+  { name: 'onyx-silver', colors: ['#d7dade', '#8b9199', '#3a3f45', '#0c0d0f'] },
+  { name: 'graphite-royal', colors: ['#9fb0e8', '#3f56c4', '#2a2e38', '#101218'] },
+  { name: 'onyx-ultraviolet', colors: ['#c9a6ff', '#7b3ff2', '#2a1450', '#08070d'] },
+  { name: 'onyx-snow', colors: ['#ffffff', '#b0b0b0', '#4a4a4a', '#000000'] },
+  { name: 'midnight-ember', colors: ['#f0a468', '#c23f1f', '#2a1410', '#0a0a0c'] },
+  { name: 'slate-harbor', colors: ['#aeb7bd', '#6f7b84', '#3c454c', '#1a1f24'] },
 
   // ── Neutral / mono ──
   { name: 'ivory-ink', colors: ['#f7f4ef', '#d8d2c8', '#8a8378', '#20201d'] },
   { name: 'paper-graphite', colors: ['#f4f4f5', '#cfcfd4', '#83838f', '#1c1c22'] },
   { name: 'bone-coffee', colors: ['#f5efe6', '#d9c9b3', '#9c8468', '#3a2c1e'] },
   { name: 'porcelain-greige', colors: ['#f6f3ef', '#ddd4c9', '#b0a596', '#6a5f52'] },
+  { name: 'battleship-steel', colors: ['#e6e9e8', '#b9c0be', '#7d8683', '#3f4745'] },
+  { name: 'gunmetal-fog', colors: ['#eceef1', '#c2c7cd', '#7b838d', '#343a42'] },
 ] as const satisfies readonly Palette[];
 
 /** Union of every built-in palette name, e.g. `"mint-sea"`. */
