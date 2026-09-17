@@ -30,6 +30,7 @@ export const colorPalettes = [
   { name: 'coral-cream', colors: ['#fbe9df', '#f5b79a', '#e8735a', '#c33f36'] },
   { name: 'honey-espresso', colors: ['#f7ecd9', '#e5b877', '#b9793f', '#5f3418'] },
   { name: 'apricot-plum', colors: ['#fdf0e6', '#f6c79a', '#e58b6f', '#7d4a6b'] },
+  { name: 'golden-hour', colors: ['#fdf3e1', '#f7cf8a', '#e89a5a', '#9a4a3a'] },
 
   // ── Pink / violet / mauve ──
   { name: 'lavender-rose', colors: ['#f4eefb', '#d9c2ef', '#c98fb8', '#8a5fd0'] },
@@ -37,6 +38,9 @@ export const colorPalettes = [
   { name: 'mauve-plum', colors: ['#f6f0f2', '#d8b8c6', '#a5738c', '#5f3a55'] },
   { name: 'periwinkle-blush', colors: ['#f0f0fb', '#c3c6f0', '#cf9fc6', '#6a5fd0'] },
   { name: 'orchid-frost', colors: ['#f6eff6', '#e0c2e0', '#b98fc4', '#7a5aa6', '#3f2f5c'] },
+  { name: 'quartz-rose', colors: ['#faf1f1', '#ecc9cc', '#c99aa3', '#8a5f6a'] },
+  { name: 'wisteria-sky', colors: ['#f2f0fb', '#cfc6ef', '#9fb2e6', '#4f6aa6'] },
+  { name: 'zephyr-dawn', colors: ['#fdf3f5', '#f2d6e2', '#c6d6f2', '#7f9fd8'] },
 
   // ── Cool: blue / slate / sky (analogous) ──
   { name: 'sky-slate', colors: ['#eef4fb', '#bcd2ef', '#6f8fc4', '#2f3f66'] },
@@ -50,6 +54,8 @@ export const colorPalettes = [
   { name: 'mint-sea', colors: ['#eef8f4', '#b6e2d2', '#5fb39c', '#1f5c4d'] },
   { name: 'olive-cream', colors: ['#f6f3e6', '#dbd09b', '#a39a5c', '#5f5a2f'] },
   { name: 'eucalyptus-fog', colors: ['#eff4f1', '#cbdcd2', '#94b3a6', '#4f6b60'] },
+  { name: 'kelp-forest', colors: ['#eef3ea', '#a9c49a', '#4f7a5a', '#1f3a2f'] },
+  { name: 'yuzu-mint', colors: ['#fbfbe6', '#eef29a', '#b3d98a', '#3f8f7a'] },
 
   // ── Analogous + a single contrasting splash ──
   { name: 'periwinkle-gold', colors: ['#dfe6ff', '#a9b6f0', '#5b6bd6', '#e6c25a'] },
@@ -65,10 +71,14 @@ export const colorPalettes = [
   { name: 'iris-meadow', colors: ['#eaf5ec', '#7cc48f', '#3f8fb3', '#5f4fb0'] },
   { name: 'autumn-spice', colors: ['#f7ecd6', '#dba24f', '#b5522f', '#6e2f4a'] },
   { name: 'ultraviolet-sea', colors: ['#e9f0fb', '#6f9fe0', '#4a5fc4', '#6a3da6'] },
+  { name: 'purple-rain', colors: ['#f1ebf7', '#b69ad6', '#6f3fa8', '#2a1740'] },
+  { name: 'nectarine-fizz', colors: ['#fff1e6', '#ffc59a', '#ff8a5c', '#d9485f'] },
+  { name: 'raspberry-cream', colors: ['#fdeef1', '#f4a9bd', '#d9537a', '#8a1f45'] },
 
   // ── Muted / dusty / earthy ──
   { name: 'fog-plum', colors: ['#f2f0f3', '#cfc6d2', '#9a8a9c', '#5f4a5c'] },
   { name: 'sand-sky', colors: ['#f4efe4', '#e0d3b8', '#a9bcc4', '#5f7f8c'] },
+  { name: 'xanadu-sage', colors: ['#f1f4f1', '#c8d3c8', '#738678', '#36443a'] },
 
   // ── Neutral / mono ──
   { name: 'ivory-ink', colors: ['#f7f4ef', '#d8d2c8', '#8a8378', '#20201d'] },

@@ -1,6 +1,6 @@
 # @dooph-software/mesh-gradients
 
-Deterministic, seeded mesh-gradient images plus a curated set of 37 color palettes. The same seed, palette, size and look always render the same image, down to the byte.
+Deterministic, seeded mesh-gradient images plus a curated set of 47 color palettes. The same seed, palette, size and look always render the same image, down to the byte.
 
 ```bash
 npm install @dooph-software/mesh-gradients

@@ -13,13 +13,19 @@ One sample per built-in palette, seed `example`, 600×750 WebP.
   <tr>
     <td align="center"><img src="./honey-espresso.webp" width="180" alt="honey-espresso"><br><code>honey-espresso</code><br><sub>#f7ecd9 #e5b877 #b9793f #5f3418</sub><br><sub>accent #b9793f</sub></td>
     <td align="center"><img src="./apricot-plum.webp" width="180" alt="apricot-plum"><br><code>apricot-plum</code><br><sub>#fdf0e6 #f6c79a #e58b6f #7d4a6b</sub><br><sub>accent #e58b6f</sub></td>
+    <td align="center"><img src="./golden-hour.webp" width="180" alt="golden-hour"><br><code>golden-hour</code><br><sub>#fdf3e1 #f7cf8a #e89a5a #9a4a3a</sub><br><sub>accent #e89a5a</sub></td>
     <td align="center"><img src="./lavender-rose.webp" width="180" alt="lavender-rose"><br><code>lavender-rose</code><br><sub>#f4eefb #d9c2ef #c98fb8 #8a5fd0</sub><br><sub>accent #c98fb8</sub></td>
-    <td align="center"><img src="./violet-mist.webp" width="180" alt="violet-mist"><br><code>violet-mist</code><br><sub>#f1eefb #c9b8ef #8f7fe0 #4a3d9c</sub><br><sub>accent #8f7fe0</sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="./violet-mist.webp" width="180" alt="violet-mist"><br><code>violet-mist</code><br><sub>#f1eefb #c9b8ef #8f7fe0 #4a3d9c</sub><br><sub>accent #8f7fe0</sub></td>
     <td align="center"><img src="./mauve-plum.webp" width="180" alt="mauve-plum"><br><code>mauve-plum</code><br><sub>#f6f0f2 #d8b8c6 #a5738c #5f3a55</sub><br><sub>accent #a5738c</sub></td>
     <td align="center"><img src="./periwinkle-blush.webp" width="180" alt="periwinkle-blush"><br><code>periwinkle-blush</code><br><sub>#f0f0fb #c3c6f0 #cf9fc6 #6a5fd0</sub><br><sub>accent #cf9fc6</sub></td>
     <td align="center"><img src="./orchid-frost.webp" width="180" alt="orchid-frost"><br><code>orchid-frost</code><br><sub>#f6eff6 #e0c2e0 #b98fc4 #7a5aa6 #3f2f5c</sub><br><sub>accent #b98fc4</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="./quartz-rose.webp" width="180" alt="quartz-rose"><br><code>quartz-rose</code><br><sub>#faf1f1 #ecc9cc #c99aa3 #8a5f6a</sub><br><sub>accent #c99aa3</sub></td>
+    <td align="center"><img src="./wisteria-sky.webp" width="180" alt="wisteria-sky"><br><code>wisteria-sky</code><br><sub>#f2f0fb #cfc6ef #9fb2e6 #4f6aa6</sub><br><sub>accent #9fb2e6</sub></td>
+    <td align="center"><img src="./zephyr-dawn.webp" width="180" alt="zephyr-dawn"><br><code>zephyr-dawn</code><br><sub>#fdf3f5 #f2d6e2 #c6d6f2 #7f9fd8</sub><br><sub>accent #c6d6f2</sub></td>
     <td align="center"><img src="./sky-slate.webp" width="180" alt="sky-slate"><br><code>sky-slate</code><br><sub>#eef4fb #bcd2ef #6f8fc4 #2f3f66</sub><br><sub>accent #6f8fc4</sub></td>
   </tr>
   <tr>
@@ -35,30 +41,38 @@ One sample per built-in palette, seed `example`, 600×750 WebP.
     <td align="center"><img src="./eucalyptus-fog.webp" width="180" alt="eucalyptus-fog"><br><code>eucalyptus-fog</code><br><sub>#eff4f1 #cbdcd2 #94b3a6 #4f6b60</sub><br><sub>accent #94b3a6</sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="./kelp-forest.webp" width="180" alt="kelp-forest"><br><code>kelp-forest</code><br><sub>#eef3ea #a9c49a #4f7a5a #1f3a2f</sub><br><sub>accent #4f7a5a</sub></td>
+    <td align="center"><img src="./yuzu-mint.webp" width="180" alt="yuzu-mint"><br><code>yuzu-mint</code><br><sub>#fbfbe6 #eef29a #b3d98a #3f8f7a</sub><br><sub>accent #b3d98a</sub></td>
     <td align="center"><img src="./periwinkle-gold.webp" width="180" alt="periwinkle-gold"><br><code>periwinkle-gold</code><br><sub>#dfe6ff #a9b6f0 #5b6bd6 #e6c25a</sub><br><sub>accent #5b6bd6</sub></td>
     <td align="center"><img src="./lilac-lemon.webp" width="180" alt="lilac-lemon"><br><code>lilac-lemon</code><br><sub>#f3eefb #d3c2ef #9f8fd0 #e6d25a</sub><br><sub>accent #9f8fd0</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="./blush-teal.webp" width="180" alt="blush-teal"><br><code>blush-teal</code><br><sub>#fbeee9 #f2c2b0 #d78a8f #3f9c94</sub><br><sub>accent #d78a8f</sub></td>
     <td align="center"><img src="./sage-coral.webp" width="180" alt="sage-coral"><br><code>sage-coral</code><br><sub>#f2f5ee #cdd8bd #8fa579 #e0755a</sub><br><sub>accent #8fa579</sub></td>
-  </tr>
-  <tr>
     <td align="center"><img src="./slate-amber.webp" width="180" alt="slate-amber"><br><code>slate-amber</code><br><sub>#eef2f6 #bcc9d8 #5f7794 #e0a24e</sub><br><sub>accent #5f7794</sub></td>
     <td align="center"><img src="./sunset-rose.webp" width="180" alt="sunset-rose"><br><code>sunset-rose</code><br><sub>#fce9d6 #f6a95c #e8617a #8a3d7a</sub><br><sub>accent #e8617a</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="./berry-bloom.webp" width="180" alt="berry-bloom"><br><code>berry-bloom</code><br><sub>#fbe9f2 #e88fb8 #c94f8f #7a2f6a</sub><br><sub>accent #c94f8f</sub></td>
     <td align="center"><img src="./jewel-peacock.webp" width="180" alt="jewel-peacock"><br><code>jewel-peacock</code><br><sub>#e6f5f0 #4fb3a6 #1f7a99 #243f8a</sub><br><sub>accent #1f7a99</sub></td>
-  </tr>
-  <tr>
     <td align="center"><img src="./iris-meadow.webp" width="180" alt="iris-meadow"><br><code>iris-meadow</code><br><sub>#eaf5ec #7cc48f #3f8fb3 #5f4fb0</sub><br><sub>accent #3f8fb3</sub></td>
     <td align="center"><img src="./autumn-spice.webp" width="180" alt="autumn-spice"><br><code>autumn-spice</code><br><sub>#f7ecd6 #dba24f #b5522f #6e2f4a</sub><br><sub>accent #b5522f</sub></td>
-    <td align="center"><img src="./ultraviolet-sea.webp" width="180" alt="ultraviolet-sea"><br><code>ultraviolet-sea</code><br><sub>#e9f0fb #6f9fe0 #4a5fc4 #6a3da6</sub><br><sub>accent #4a5fc4</sub></td>
-    <td align="center"><img src="./fog-plum.webp" width="180" alt="fog-plum"><br><code>fog-plum</code><br><sub>#f2f0f3 #cfc6d2 #9a8a9c #5f4a5c</sub><br><sub>accent #9a8a9c</sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="./ultraviolet-sea.webp" width="180" alt="ultraviolet-sea"><br><code>ultraviolet-sea</code><br><sub>#e9f0fb #6f9fe0 #4a5fc4 #6a3da6</sub><br><sub>accent #4a5fc4</sub></td>
+    <td align="center"><img src="./purple-rain.webp" width="180" alt="purple-rain"><br><code>purple-rain</code><br><sub>#f1ebf7 #b69ad6 #6f3fa8 #2a1740</sub><br><sub>accent #6f3fa8</sub></td>
+    <td align="center"><img src="./nectarine-fizz.webp" width="180" alt="nectarine-fizz"><br><code>nectarine-fizz</code><br><sub>#fff1e6 #ffc59a #ff8a5c #d9485f</sub><br><sub>accent #ff8a5c</sub></td>
+    <td align="center"><img src="./raspberry-cream.webp" width="180" alt="raspberry-cream"><br><code>raspberry-cream</code><br><sub>#fdeef1 #f4a9bd #d9537a #8a1f45</sub><br><sub>accent #d9537a</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="./fog-plum.webp" width="180" alt="fog-plum"><br><code>fog-plum</code><br><sub>#f2f0f3 #cfc6d2 #9a8a9c #5f4a5c</sub><br><sub>accent #9a8a9c</sub></td>
     <td align="center"><img src="./sand-sky.webp" width="180" alt="sand-sky"><br><code>sand-sky</code><br><sub>#f4efe4 #e0d3b8 #a9bcc4 #5f7f8c</sub><br><sub>accent #a9bcc4</sub></td>
+    <td align="center"><img src="./xanadu-sage.webp" width="180" alt="xanadu-sage"><br><code>xanadu-sage</code><br><sub>#f1f4f1 #c8d3c8 #738678 #36443a</sub><br><sub>accent #738678</sub></td>
     <td align="center"><img src="./ivory-ink.webp" width="180" alt="ivory-ink"><br><code>ivory-ink</code><br><sub>#f7f4ef #d8d2c8 #8a8378 #20201d</sub><br><sub>accent #8a8378</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="./paper-graphite.webp" width="180" alt="paper-graphite"><br><code>paper-graphite</code><br><sub>#f4f4f5 #cfcfd4 #83838f #1c1c22</sub><br><sub>accent #83838f</sub></td>
     <td align="center"><img src="./bone-coffee.webp" width="180" alt="bone-coffee"><br><code>bone-coffee</code><br><sub>#f5efe6 #d9c9b3 #9c8468 #3a2c1e</sub><br><sub>accent #9c8468</sub></td>
-  </tr>
-  <tr>
     <td align="center"><img src="./porcelain-greige.webp" width="180" alt="porcelain-greige"><br><code>porcelain-greige</code><br><sub>#f6f3ef #ddd4c9 #b0a596 #6a5f52</sub><br><sub>accent #b0a596</sub></td>
   </tr>
 </table>
