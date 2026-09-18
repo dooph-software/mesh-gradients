@@ -14,7 +14,8 @@
     "access": "public"
   },
   "bin": {
-    "mesh-gradient": "./dist/cli.js"
+    "mesh-gradient": "./dist/cli.js",
+    "mesh-gradients-init-skills": "./bin/init-skills.mjs"
   },
   "exports": {
     ".": {
@@ -34,7 +35,9 @@
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "skills",
+    "bin"
   ],
   "engines": {
     "node": ">=20"

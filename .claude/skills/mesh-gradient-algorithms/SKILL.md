@@ -1,6 +1,6 @@
 ---
 name: mesh-gradient-algorithms
-description: Use when editing, reviewing, optimizing, or debugging how images get produced in this package — src/random.ts, src/render.ts, the look constants, the grain overlay, pickPalette or paletteAccent — or when a change might alter rendered pixels for an existing seed.
+description: Use when editing, reviewing, optimizing, or debugging how images get produced in this package — src/random.ts, src/render.ts, the look constants, the grain overlay, pickPalette, paletteAccent, or the complement color math in src/color.ts — or when a change might alter rendered pixels for an existing seed.
 ---
 
 # Mesh-gradient algorithms
@@ -26,6 +26,7 @@ Adding, removing or reordering *any* draw — including a different number of gr
 | Film grain | end of `renderCanvas` | Per-pixel independent noise composited with canvas `overlay` at `grainOpacity`. Already 1 pixel per speck — "finer" needs supersampling, not a smaller cell. Reimplementing the blend in JS will drift from skia's rounding and break the fixture. |
 | Palette pick | `pickPalette`, `src/palettes.ts` | Rendezvous (highest-random-weight) hashing: score each palette from `seed + '::palette::' + name`, highest wins. Order-independent; adding a palette moves ~1/N seeds, removing moves only its own, renaming moves both. Keep the key string and the hash→PRNG step identical or every pick changes. |
 | Accent | `paletteAccent` | The ramp's mid stop, `floor(length / 2)`. Pure position, no color math. |
+| Complement | `paletteComplementColor` / `complementColor`, `src/color.ts` | Hue opposite the accent's in OKLCH (or the ramp's chroma-weighted hue if the accent's chroma < 0.03), at the most saturated in-gamut chroma found in lightness 0.50–0.80, capped at 0.2. Hueless input → opposite-lightness gray. Deliberately does *not* keep the accent's lightness/chroma: that made muted palettes' complements invisible. Consumers store it, so changing the band, cap or search shifts every stored complement. |
 
 ## Before you change any of it
 

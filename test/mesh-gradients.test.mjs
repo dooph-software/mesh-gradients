@@ -34,10 +34,12 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import {
   colorPalettes,
+  complementColor,
   createMeshGradients,
   findPalette,
   generateMeshGradient,
   paletteAccent,
+  paletteComplement,
   pickPalette,
   validatePalette,
 } from '../dist/index.js';
@@ -138,6 +140,42 @@ test('paletteAccent returns the mid-tone', () => {
   assert.equal(paletteAccent(findPalette('jewel-peacock')), '#1f7a99');
 });
 
+// OKLab lightness + hue of a hex, for checking complements independently of src/color.ts.
+function oklab(hex) {
+  const lin = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  const [r, g, b] = [1, 3, 5].map((i) => lin(parseInt(hex.slice(i, i + 2), 16) / 255));
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  const A = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+  const B = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+  return { L: 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s, C: Math.hypot(A, B), h: Math.atan2(B, A) };
+}
+
+test('every palette complement is vivid, readable and opposite the accent hue', () => {
+  for (const palette of colorPalettes) {
+    const accent = oklab(paletteAccent(palette));
+    const complement = oklab(paletteComplement(palette));
+    if (complement.C < 0.01) continue; // hueless palettes get a gray, pinned below
+    // Visibility is the point: a muted complement disappears on the image.
+    assert.ok(complement.C > 0.1, `${palette.name}: chroma ${complement.C.toFixed(3)} too muted`);
+    assert.ok(complement.L > 0.49 && complement.L < 0.81, `${palette.name}: lightness out of band`);
+    if (accent.C < 0.03) continue; // near-gray accents take their hue from the ramp
+    let delta = Math.abs(accent.h - complement.h) * (180 / Math.PI);
+    if (delta > 180) delta = 360 - delta;
+    assert.ok(Math.abs(180 - delta) < 5, `${palette.name}: hue ${delta.toFixed(1)}° apart`);
+  }
+});
+
+test('complements pin known values; grays get the opposite-lightness gray', () => {
+  assert.equal(paletteComplement(findPalette('battleship-steel')), '#e74c92'); // hue from the ramp
+  assert.equal(paletteComplement(findPalette('jewel-peacock')), '#fc6d00');
+  assert.equal(paletteComplement(findPalette('onyx-snow')), '#cecece');
+  assert.equal(complementColor('#2f4fd8'), '#eab500');
+  assert.equal(complementColor('#4A4A4A'), '#cecece');
+  assert.equal(complementColor('#f0f0f0'), '#222222');
+});
+
 // Fixture is Aspect's released 0.3.0 artwork (seed "aspect", jewel-peacock,
 // 1200×1500, WebP q82). Matching it byte-for-byte proves the extraction did not
 // change the look. Encoder upgrades (sharp/libwebp) can shift bytes without a
@@ -146,6 +184,7 @@ test('reproduces the Aspect 0.3.0 release gradient exactly', async () => {
   const result = await generateMeshGradient({ seed: 'aspect', palette: 'jewel-peacock' });
   const fixture = readFileSync(new URL('./fixtures/jewel-peacock-aspect.webp', import.meta.url));
   assert.equal(result.accent, '#1f7a99');
+  assert.equal(result.complement, '#fc6d00');
   assert.equal(result.width, 1200);
   assert.equal(result.height, 1500);
   assert.ok(result.buffer.equals(fixture), 'rendered WebP differs from fixture');

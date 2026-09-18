@@ -134,7 +134,7 @@ export async function runCli(argv: string[]): Promise<void> {
   } else {
     console.log(`✓ ${out} (${(result.buffer.length / 1024).toFixed(2)} KB)`);
     console.log(`  seed: ${result.seed}`);
-    console.log(`  palette: ${result.palette.name} (accent: ${result.accent})`);
+    console.log(`  palette: ${result.palette.name} (accent: ${result.accent}, complement: ${result.complement})`);
   }
 }
 

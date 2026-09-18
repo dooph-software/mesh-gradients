@@ -10,7 +10,7 @@
 
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { colorPalettes, createMeshGradients, findPalette, paletteAccent } from '../dist/index.js';
+import { colorPalettes, createMeshGradients, findPalette, paletteAccent, paletteComplement } from '../dist/index.js';
 import { examplesDir, featuredDir, featuredImage, readFeatured, repoRoot } from './featured.mjs';
 
 const COLUMNS = 4;
@@ -47,7 +47,8 @@ const cells = colorPalettes.map(
   (palette) =>
     `<td align="center"><img src="./${palette.name}.webp" width="180" alt="${palette.name}"><br>` +
     `<code>${palette.name}</code><br><sub>${palette.colors.join(' ')}</sub><br>` +
-    `<sub>accent ${paletteAccent(palette)} · seed <code>${seedFor(palette)}</code></sub></td>`,
+    `<sub>accent ${paletteAccent(palette)} · complement ${paletteComplement(palette)}</sub><br>` +
+    `<sub>seed <code>${seedFor(palette)}</code></sub></td>`,
 );
 const rows = [];
 for (let i = 0; i < cells.length; i += COLUMNS) {

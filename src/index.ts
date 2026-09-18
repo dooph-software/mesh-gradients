@@ -8,10 +8,12 @@ export {
 } from './create';
 export {
   colorPalettes,
+  complementColor,
   findPalette,
   MAX_PALETTE_COLORS,
   MIN_PALETTE_COLORS,
   paletteAccent,
+  paletteComplement,
   pickPalette,
   validatePalette,
   validatePalettes,

@@ -15,6 +15,8 @@
  *   the name as the tiebreak.
  * - `validatePalette` / `validatePalettes` are the runtime gate for palettes
  *   that bypassed the type system (JSON, CLI input, casts).
+ * - `paletteAccent` is the ramp's mid stop by position; `paletteComplement` is
+ *   a vivid opposite-hue color for chips, computed by `./color`.
  *
  * ## constraints
  * - A palette's name is its identity, not a label. It is the rendezvous hash
@@ -38,7 +40,10 @@
  *   together — a 6-stop tuple added to the type alone would pass typecheck and
  *   then throw at render time for the caller.
  */
+import { complementColor, paletteComplementColor } from './color';
 import { createSeededRandom, hashStringToInt } from './random';
+
+export { complementColor };
 
 export const MIN_PALETTE_COLORS = 3;
 export const MAX_PALETTE_COLORS = 5;
@@ -157,6 +162,15 @@ export type PaletteName = (typeof colorPalettes)[number]['name'];
 export function paletteAccent(palette: Palette): string {
   const colors = palette.colors;
   return colors[Math.floor(colors.length / 2)];
+}
+
+/**
+ * A color built to stand out on the palette's images: the hue opposite the
+ * accent (or the whole ramp, when the accent is near-gray) at its most saturated
+ * readable lightness. For chips, geometry and highlights.
+ */
+export function paletteComplement(palette: Palette): string {
+  return paletteComplementColor(paletteAccent(palette), palette.colors);
 }
 
 const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;

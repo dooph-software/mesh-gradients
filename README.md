@@ -12,6 +12,16 @@ generate on demand
 npm run gradient -- --palette jewel-peacock --seed gradient --width 700 --height 500
 ```
 
+### Agent skills
+
+To help your coding agent use this package correctly (what to store per image, server vs. client imports, how size affects the composition), copy the bundled skills into your project:
+
+```bash
+npx mesh-gradients-init-skills
+```
+
+It asks which agent directories to install to (`.agents/`, `.claude/`, `.agent/`) and changes nothing else.
+
 ## Featured Examples
 
 <!-- docs:begin:featured -->
@@ -37,14 +47,20 @@ import {
   findPalette,
   pickPalette,
   paletteAccent,
+  paletteComplement,
+  complementColor,
 } from "@dooph-software/mesh-gradients/palettes";
 
 findPalette("mint-sea"); // { name: 'mint-sea', colors: [...] }. Throws on unknown names
 pickPalette("autocad-0.3.0"); // deterministic pick from any seed string
 paletteAccent(findPalette("jewel-peacock")); // '#1f7a99'. The ramp's mid-tone, for UI accents
+paletteComplement(findPalette("jewel-peacock")); // '#fc6d00'. Opposite hue, vivid, for chips
+complementColor("#2f4fd8"); // '#eab500'. Same, for any hex
 ```
 
 `PaletteName` is a union of the built-in names, so you get autocomplete in editors.
+
+The **complement** is built to stand out on the palette's images, for chips and geometry. Its hue is exactly opposite the accent's (180° in OKLCH, a perceptual color space); if the accent is near-gray, the hue is taken from the whole ramp's tint instead. It uses the most saturated color that hue can have within a readable lightness range, so muted palettes still get a vivid complement: `battleship-steel`'s is pink. Palettes with no hue at all (`onyx-snow`) get a gray at the opposite lightness. Render results include both `accent` and `complement`.
 
 A palette has a unique `name` and **3–5** `#rrggbb` colors, ordered light to dark. The `Palette` type enforces the count and the `#`, so an inline palette with 2 or 6 colors fails typechecking. The factory (see "Custom palettes" below) and the render functions also call `validatePalette` at runtime, which catches palettes built from JSON, casts or CLI input.
 

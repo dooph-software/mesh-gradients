@@ -35,7 +35,7 @@
 import { createCanvas, ImageData, type Canvas, type SKRSContext2D } from '@napi-rs/canvas';
 import sharp from 'sharp';
 import { createNoise2D } from 'simplex-noise';
-import { paletteAccent, type Palette, type PaletteName } from './palettes';
+import { paletteAccent, paletteComplement, type Palette, type PaletteName } from './palettes';
 import { createSeededRandom, hashStringToInt } from './random';
 
 /**
@@ -101,6 +101,8 @@ export type MeshGradientCanvas = {
   palette: Palette;
   /** Mid-tone hex from the palette, handy as a UI accent next to the image. */
   accent: string;
+  /** Opposite-hue color built to stand out on the image, for chips and geometry. */
+  complement: string;
 };
 
 export type MeshGradientImage = {
@@ -111,6 +113,7 @@ export type MeshGradientImage = {
   seed: string;
   palette: Palette;
   accent: string;
+  complement: string;
 };
 
 export const DEFAULT_WIDTH = 1200;
@@ -224,7 +227,7 @@ export async function renderCanvas(
   grainCanvas.getContext('2d').putImageData(new ImageData(grainPixels, width, height), 0, 0);
   applyOverlay(context, grainCanvas, look.grainOpacity);
 
-  return { canvas, palette, accent: paletteAccent(palette) };
+  return { canvas, palette, accent: paletteAccent(palette), complement: paletteComplement(palette) };
 }
 
 function applyOverlay(context: SKRSContext2D, overlay: Canvas, opacity: number) {
@@ -243,7 +246,7 @@ export async function generateImage(
   options: ResolvedMeshGradientOptions & MeshGradientFormatOptions,
 ): Promise<MeshGradientImage> {
   const { format = 'webp', quality = DEFAULT_WEBP_QUALITY } = options;
-  const { canvas, palette, accent } = await renderCanvas(options);
+  const { canvas, palette, accent, complement } = await renderCanvas(options);
   const pngBuffer = canvas.encodeSync('png');
 
   let buffer: Buffer = pngBuffer;
@@ -259,5 +262,6 @@ export async function generateImage(
     seed: options.seed,
     palette,
     accent,
+    complement,
   };
 }
